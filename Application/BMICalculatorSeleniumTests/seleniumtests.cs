@@ -1,13 +1,15 @@
+//namespace SeleniumTests
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Threading;
 
-namespace BMICalculatorSeleniumTests
+namespace SeleniumTests.FunctionalTests
 {
     [TestClass]
-    public class seleniumtests
+    public class SeleniumFunctionalTests
     {
         private static TestContext testContext;
         private RemoteWebDriver driver;
@@ -15,7 +17,7 @@ namespace BMICalculatorSeleniumTests
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            seleniumtests.testContext = testContext;
+            SeleniumFunctionalTests.testContext = testContext;
         }
 
         [TestInitialize]
@@ -32,44 +34,115 @@ namespace BMICalculatorSeleniumTests
         }
 
         [TestMethod]
-        public void SampleFunctionalTest1()
+        public void BMIFunctionalTest()
         {
-            var webAppUrl = "";
-            try
-            {
-                webAppUrl = testContext.Properties["webAppUrl"].ToString();
-            }
-            catch (Exception)
-            {
-                webAppUrl = "http://localhost:50433/";
-            }
-            //var webAppUrl = testContext.Properties["webAppUrl"].ToString();
+            var webAppUrl = testContext.Properties["webAppUrl"].ToString();
 
-            var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            var endTimestamp = startTimestamp + 60 * 10;
+            // var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            // var endTimestamp = startTimestamp + (60 * 10);
 
-            while (true)
-            {
-                try
-                {
-                    driver.Navigate().GoToUrl(webAppUrl);
-                    // Assert.AreEqual("Home Page - ASP.NET Core", driver.Title, "Expected title to be 'Home Page - ASP.NET Core'");
-                    Assert.AreEqual("Edit Here", "Edit Here");
+            // Arrange
+            double expectedBMIResult = 18.55;
+            string expectedResult = "Your BMI is " + expectedBMIResult;
 
-                    break;
-                }
-                catch(Exception e)
-                {
-                    var currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                               
-                    if (currentTimestamp > endTimestamp)
-                    {
-                        Console.Write("##vso[task.logissue type=error;]Test SampleFunctionalTest1 failed with error: " + e.ToString());
-                        throw;
-                    }
-                    Thread.Sleep(5000);
-                }
-            }
+            // Act
+            driver.Navigate().GoToUrl(webAppUrl);
+            driver.Manage().Window.Size = new System.Drawing.Size(1552, 840);
+            driver.FindElement(By.Id("BMI_WeightStones")).Click();
+            driver.FindElement(By.Id("BMI_WeightStones")).SendKeys("8");
+            driver.FindElement(By.Id("BMI_WeightPounds")).SendKeys("10");
+            driver.FindElement(By.Id("BMI_HeightFeet")).SendKeys("5");
+            driver.FindElement(By.Id("BMI_HeightInches")).SendKeys("8");
+            driver.FindElement(By.CssSelector(".btn")).Click();
+
+            string actualResult = driver.FindElement(By.Id("BMIValue")).Text;
+
+            // Assert
+            Assert.AreEqual(actualResult, expectedResult);
+        }
+
+        [TestMethod]
+        public void BMICategoryFunctionalTest()
+        {
+            var webAppUrl = testContext.Properties["webAppUrl"].ToString();
+
+            // var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            // var endTimestamp = startTimestamp + (60 * 10);
+
+            // Arrange
+            string expectedBMICategoryResult = "Normal";
+            string expectedResult = "Your BMI Category is " + expectedBMICategoryResult;
+
+            // Act
+            driver.Navigate().GoToUrl(webAppUrl);
+            driver.Manage().Window.Size = new System.Drawing.Size(1552, 840);
+            driver.FindElement(By.Id("BMI_WeightStones")).Click();
+            driver.FindElement(By.Id("BMI_WeightStones")).SendKeys("8");
+            driver.FindElement(By.Id("BMI_WeightPounds")).SendKeys("10");
+            driver.FindElement(By.Id("BMI_HeightFeet")).SendKeys("5");
+            driver.FindElement(By.Id("BMI_HeightInches")).SendKeys("8");
+            driver.FindElement(By.CssSelector(".btn")).Click();
+
+            string actualResult = driver.FindElement(By.Id("BMICategory")).Text;
+
+            // Assert
+            Assert.AreEqual(actualResult, expectedResult);
+        }
+
+        [TestMethod]
+        public void BMIWeightMetricFunctionalTest()
+        {
+            var webAppUrl = testContext.Properties["webAppUrl"].ToString();
+
+            // var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            // var endTimestamp = startTimestamp + (60 * 10);
+
+            // Arrange
+            double expectedBMIWeightMetricResult = 55.34;
+            string expectedResult = "Your BMI Category is " + expectedBMIWeightMetricResult;
+
+            // Act
+            driver.Navigate().GoToUrl(webAppUrl);
+            driver.Manage().Window.Size = new System.Drawing.Size(1552, 840);
+            driver.FindElement(By.Id("BMI_WeightStones")).Click();
+            driver.FindElement(By.Id("BMI_WeightStones")).SendKeys("8");
+            driver.FindElement(By.Id("BMI_WeightPounds")).SendKeys("10");
+            driver.FindElement(By.Id("BMI_HeightFeet")).SendKeys("5");
+            driver.FindElement(By.Id("BMI_HeightInches")).SendKeys("8");
+            driver.FindElement(By.CssSelector(".btn")).Click();
+
+            string actualResult = driver.FindElement(By.Id("BMIWeightMetric")).Text;
+
+            // Assert
+            Assert.AreEqual(actualResult, expectedResult);
+        }
+
+        [TestMethod]
+        public void BMIHeightMetricFunctionalTest()
+        {
+            var webAppUrl = testContext.Properties["webAppUrl"].ToString();
+
+            // var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            // var endTimestamp = startTimestamp + (60 * 10);
+
+            // Arrange
+            double expectedBMIHeightMetricResult = 1.73;
+            string expectedResult = "Your BMI Category is " + expectedBMIHeightMetricResult;
+
+            // Act
+            driver.Navigate().GoToUrl(webAppUrl);
+            driver.Manage().Window.Size = new System.Drawing.Size(1552, 840);
+            driver.FindElement(By.Id("BMI_WeightStones")).Click();
+            driver.FindElement(By.Id("BMI_WeightStones")).SendKeys("8");
+            driver.FindElement(By.Id("BMI_WeightPounds")).SendKeys("10");
+            driver.FindElement(By.Id("BMI_HeightFeet")).SendKeys("5");
+            driver.FindElement(By.Id("BMI_HeightInches")).SendKeys("8");
+            driver.FindElement(By.CssSelector(".btn")).Click();
+
+            string actualResult = driver.FindElement(By.Id("BMIHeightMetric")).Text;
+
+            // Assert
+            Assert.AreEqual(actualResult, expectedResult);
         }
 
         private RemoteWebDriver GetChromeDriver()
@@ -77,6 +150,7 @@ namespace BMICalculatorSeleniumTests
             var path = Environment.GetEnvironmentVariable("ChromeWebDriver");
             var options = new ChromeOptions();
             options.AddArguments("--no-sandbox");
+            options.AddArguments("headless");
 
             if (!string.IsNullOrWhiteSpace(path))
             {

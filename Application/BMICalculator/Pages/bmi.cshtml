@@ -1,5 +1,5 @@
 ﻿@page
-@model BMICalculator.Pages.BmiModel
+@model BmiModel
 
 @{
     ViewData["Title"] = "BMI calculator";
@@ -38,12 +38,16 @@
             @if (Request.Method == "POST")
             {
                 <div id="BMIValue">
-                    @Html.DisplayNameFor(m => m.BMI.BMIValue)
-                    @Html.DisplayFor(m => m.BMI.BMIValue)
+                    @Html.DisplayNameFor(m => m.BMI.BMIValue) @Html.DisplayFor(m => m.BMI.BMIValue)
                 </div>
                 <div id="BMICategory">
-                    @Html.DisplayNameFor(m => m.BMI.BMICategory)
-                    @Html.DisplayFor(m => m.BMI.BMICategory)
+                    @Html.DisplayNameFor(m => m.BMI.BMICategory) @Html.DisplayFor(m => m.BMI.BMICategory)
+                </div>
+                <div id="BMIWeightMetric">
+                    @Html.DisplayNameFor(m => m.BMI.BMIWeightMetric) @Html.DisplayFor(m => m.BMI.BMIWeightMetric)
+                </div>
+                <div id="BMIHeightMetric">
+                    @Html.DisplayNameFor(m => m.BMI.BMIHeightMetric) @Html.DisplayFor(m => m.BMI.BMIHeightMetric)
                 </div>
             }
         </form>

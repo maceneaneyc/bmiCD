@@ -84,6 +84,39 @@ namespace BMICalculator
                 }
             }
         }
+
+        // Output Height in Metres
+        [Display(Name = "Your Height in Metres is")]
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double BMIHeightMetric
+        {
+            get
+            {
+
+                double totalHeightInInches = (HeightFeet * 12) + HeightInches;
+
+                // do conversions to metric
+                double totalHeightInMetres = totalHeightInInches * InchestoMetres;
+
+                return totalHeightInMetres;
+            }
+        }
+
+        // Output Weight in Kilograms
+        [Display(Name = "Your Weight in Kilograms is")]
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double BMIWeightMetric
+        {
+            get
+            {
+                double totalWeightInPounds = (WeightStones * 14) + WeightPounds;
+                // do conversions to metric
+                double totalWeightInKgs = totalWeightInPounds * PoundsToKgs;
+
+                return totalWeightInKgs;
+            }
+        }
+
     }
 }
 
